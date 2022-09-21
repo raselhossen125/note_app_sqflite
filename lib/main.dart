@@ -2,10 +2,11 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
+import 'package:provider/provider.dart';
 import 'pages/new_note_page.dart';
 import 'pages/note_list_page.dart';
 import 'pages/spalash_page.dart';
+import 'provider/note_provider.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(
@@ -16,7 +17,12 @@ void main() {
     ),
   );
   runApp(
-    const MyApp(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => NoteProvider()),
+      ],
+      child: const MyApp(),
+    ),
   );
 }
 
@@ -42,7 +48,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: pokeballRed,
       ),
       initialRoute: SpalashPage.routeName,
       routes: {

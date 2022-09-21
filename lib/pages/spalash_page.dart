@@ -2,7 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import 'note_list_page.dart';
 
 class SpalashPage extends StatefulWidget {
@@ -25,17 +24,20 @@ class _SpalashPageState extends State<SpalashPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Center(
-        child: Column(
-          children: [
-            Text(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Align(
+            alignment: Alignment.center,
+            child: Text(
               'Notes',
               style: GoogleFonts.acme(
-                textStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 22, color: Colors.black),
+                textStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 30, color: Colors.black),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
