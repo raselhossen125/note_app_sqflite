@@ -4,18 +4,21 @@ const String tableNoteColId = 'id';
 const String tableNoteColTitle = 'title';
 const String tableNoteColNote = 'note';
 const String tableNoteColTime = 'time';
+// const String tableNoteColIsFavourite = 'isFav';
 
 class NoteModel {
   int? id;
   String? title;
   String note;
   DateTime time;
+  // bool isFav;
 
   NoteModel({
     this.id,
     this.title,
     required this.note,
     required this.time,
+    // this.isFav = false,
   });
 
   Map<String, dynamic> toMap() {
@@ -23,6 +26,7 @@ class NoteModel {
       tableNoteColTitle: title,
       tableNoteColNote: note,
       tableNoteColTime: time,
+      // tableNoteColIsFavourite: isFav,
     };
     if (id != null) {
       map[tableNoteColId] = id;
@@ -35,5 +39,6 @@ class NoteModel {
         title: map[tableNoteColTitle],
         note: map[tableNoteColNote],
         time: map[tableNoteColTime],
+        // isFav: map[tableNoteColIsFavourite],
   );
 }
