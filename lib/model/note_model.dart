@@ -10,7 +10,7 @@ class NoteModel {
   int? id;
   String? title;
   String note;
-  DateTime time;
+  String time;
   // bool isFav;
 
   NoteModel({
@@ -41,4 +41,9 @@ class NoteModel {
         time: map[tableNoteColTime],
         // isFav: map[tableNoteColIsFavourite],
   );
+
+  @override
+  String toString() {
+    return 'NoteModel{id: $id, title: $title, note: $note}';
+  }
 }

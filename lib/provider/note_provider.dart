@@ -14,4 +14,19 @@ class NoteProvider extends ChangeNotifier {
     }
     return false;
   }
+
+  getAllNotes() async{
+    DBHelper.getAllNotes().then((value) {
+      noteList = value;
+      notifyListeners();
+    });
+  }
+
+  deleteNote(int id) async{
+    final rowId = await DBHelper.deleteNote(id);
+    if (rowId > 0) {
+      noteList.removeWhere((element) => element.id == id);
+      notifyListeners();
+    }
+  }
 }

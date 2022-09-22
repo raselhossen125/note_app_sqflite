@@ -1,4 +1,4 @@
-// ignore_for_file: depend_on_referenced_packages
+// ignore_for_file: depend_on_referenced_packages, unused_local_variable
 
 import 'package:sqflite/sqflite.dart';
 import '../model/note_model.dart';
@@ -26,5 +26,16 @@ class DBHelper {
   static Future<int> insertNote(NoteModel noteModel) async{
     final db = await open();
     return db.insert(tableNote, noteModel.toMap());
+  }
+
+  static Future<List<NoteModel>> getAllNotes() async {
+    final db = await open();
+    final List<Map<String, dynamic>> mapList = await db.query(tableNote);
+    return List.generate(mapList.length, (index) => NoteModel.fromMap(mapList[index]));
+  }
+
+  static Future<int> deleteNote(int id) async{
+    final db = await open();
+    return db.delete(tableNote, where: '$tableNoteColId = ?', whereArgs: [id]);
   }
 }
