@@ -14,7 +14,7 @@ class DBHelper {
   )
   ''';
 
-  static Future<Database> open() async{
+  static Future<Database> open() async {
     final rootPath = await getDatabasesPath();
     final dbPath = join(rootPath, 'note.db');
 
@@ -23,7 +23,7 @@ class DBHelper {
     });
   }
 
-  static Future<int> insertNote(NoteModel noteModel) async{
+  static Future<int> insertNote(NoteModel noteModel) async {
     final db = await open();
     return db.insert(tableNote, noteModel.toMap());
   }
@@ -31,10 +31,24 @@ class DBHelper {
   static Future<List<NoteModel>> getAllNotes() async {
     final db = await open();
     final List<Map<String, dynamic>> mapList = await db.query(tableNote);
-    return List.generate(mapList.length, (index) => NoteModel.fromMap(mapList[index]));
+    return List.generate(
+        mapList.length, (index) => NoteModel.fromMap(mapList[index]));
   }
 
-  static Future<int> deleteNote(int id) async{
+  static updateNote(NoteModel noteModel) async {
+    final db = await open();
+    db.update(
+        tableNote,
+        {
+          tableNoteColTitle: noteModel.title,
+          tableNoteColNote: noteModel.note,
+          tableNoteColTime: noteModel.time,
+        },
+        where: '$tableNoteColId = ?',
+        whereArgs: [noteModel.id]);
+  }
+
+  static Future<int> deleteNote(int id) async {
     final db = await open();
     return db.delete(tableNote, where: '$tableNoteColId = ?', whereArgs: [id]);
   }

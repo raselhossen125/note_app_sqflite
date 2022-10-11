@@ -1,4 +1,4 @@
-// ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors, prefer_const_literals_to_create_immutables, must_be_immutable, unnecessary_null_comparison, unused_local_variable, use_build_context_synchronously, avoid_print
+// ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors, prefer_const_literals_to_create_immutables, must_be_immutable, unnecessary_null_comparison, unused_local_variable, use_build_context_synchronously, avoid_print, non_constant_identifier_names
 
 import 'package:flutter/material.dart';
 import 'package:note_app_sqflite/pages/note_list_page.dart';
@@ -7,13 +7,19 @@ import 'package:provider/provider.dart';
 import '../model/note_model.dart';
 import '../until/helper_function.dart';
 
-class NewNotePage extends StatelessWidget {
-  static const routeName = '/new-note';
+class UpdateNotePage extends StatelessWidget {
+  static const routeName = '/update-note';
   final titleController = TextEditingController();
   final noteController = TextEditingController();
+  late NoteModel nModel;
 
   @override
   Widget build(BuildContext context) {
+    nModel = ModalRoute.of(context)!.settings.arguments as NoteModel;
+    if (nModel != null) {
+      titleController.text = nModel.title!;
+      noteController.text = nModel.note;
+    }
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -92,24 +98,19 @@ class NewNotePage extends StatelessWidget {
       showMsg(context, 'Please write do something...');
       return;
     }
-    if (noteController.text != null || noteController.text.isNotEmpty) {
-      final noteModel = NoteModel(
-        title: titleController.text,
-        note: noteController.text,
-        time: DateTime.now().toString(),
-      );
-      print(noteModel.toString());
-      final status = await Provider.of<NoteProvider>(context, listen: false)
-          .addNewNote(noteModel);
-      if (status) {
-        Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(
-            builder: (BuildContext context) => NoteListPage(),
-          ),
-          (route) => false,
-        );
-      }
-    }
+    final noteModel = NoteModel(
+      title: titleController.text,
+      note: noteController.text,
+      time: DateTime.now().toString(),
+      id: nModel.id,
+    );
+    Provider.of<NoteProvider>(context, listen: false).updateNote(noteModel);
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(
+        builder: (BuildContext context) => NoteListPage(),
+      ),
+      (route) => false,
+    );
   }
 }

@@ -22,6 +22,11 @@ class NoteProvider extends ChangeNotifier {
     });
   }
 
+  updateNote(NoteModel noteModel) async{
+    DBHelper.updateNote(noteModel);
+    notifyListeners();
+  }
+
   deleteNote(int id) async{
     final rowId = await DBHelper.deleteNote(id);
     if (rowId > 0) {

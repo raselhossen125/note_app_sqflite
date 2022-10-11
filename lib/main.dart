@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'pages/new_note_page.dart';
 import 'pages/note_list_page.dart';
-import 'pages/spalash_page.dart';
+import 'pages/update_note_page.dart';
 import 'provider/note_provider.dart';
 
 void main() {
@@ -50,11 +50,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: pokeballRed,
       ),
-      initialRoute: SpalashPage.routeName,
+      initialRoute: NoteListPage.routeName,
       routes: {
-        SpalashPage.routeName: (context) => SpalashPage(),
         NoteListPage.routeName: (context) => NoteListPage(),
         NewNotePage.routeName: (context) => NewNotePage(),
+        UpdateNotePage.routeName: (context) => UpdateNotePage(),
       },
     );
   }
